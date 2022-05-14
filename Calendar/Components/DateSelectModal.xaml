@@ -9,60 +9,124 @@
         WindowStyle="None"
         ResizeMode="NoResize"
         AllowsTransparency="True"
-        Loaded="DateSelectModal_OnLoaded" WindowStartupLocation="CenterOwner">
-    <Window.Clip>
-        <RectangleGeometry Rect="0,0,300,350" RadiusX="10" RadiusY="10" />
-    </Window.Clip>
-        
+        Loaded="DateSelectModal_OnLoaded" WindowStartupLocation="CenterScreen"
+        BorderThickness="3">
+
+    <Window.Style>
+        <Style TargetType="Window">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Window">
+                        <Border>
+                            <Grid>
+                                <Rectangle Fill="White" Margin="8" RadiusX="10" RadiusY="10">
+                                    <Rectangle.Effect>
+                                        <DropShadowEffect BlurRadius="15" Opacity="50" ShadowDepth="0"
+                                                          RenderingBias="Quality" Color="Gray" />
+                                    </Rectangle.Effect>
+                                </Rectangle>
+                                <ContentPresenter Margin="8" />
+                            </Grid>
+                        </Border>
+
+                    </ControlTemplate>
+                </Setter.Value>
+
+            </Setter>
+        </Style>
+    </Window.Style>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
-            <RowDefinition Height="250" />
-            <RowDefinition Height="60" />
+            <RowDefinition Height="210" />
+            <RowDefinition Height="*" />
 
         </Grid.RowDefinitions>
 
         <!-- Row for Heading -->
-        <Grid Background="#f7f7f7" MouseDown="ModalHeading_EventHandler">
+        <Border CornerRadius="10 10 0 0"
+                Background="#f1f1f1">
+            <Grid MouseDown="ModalHeading_EventHandler">
+                <Label Foreground="Black" Margin="16 0 0 0" FontWeight="Medium" FontSize="15"
+                       VerticalContentAlignment="Center" Content="Select a Date" />
+            </Grid>
+        </Border>
 
-            <Label Foreground="Black" Margin="16 0 0 0" FontWeight="Medium" FontSize="15"
-                   VerticalContentAlignment="Center">
-                Select a Date
-            </Label>
-        </Grid>
-
-        <Grid Margin="20" Height="100" Grid.Row="1">
+        <Grid Grid.Row="1"
+              Margin="20"
+              Height="150"
+              VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="60" />
-                <ColumnDefinition />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="30" />
             </Grid.RowDefinitions>
 
-            <Label Content="Month" FontSize="14" FontWeight="Medium" VerticalAlignment="Center"
+            <Label Grid.Row="1"
+                   Content="Month"
+                   FontSize="14"
+                   FontWeight="Medium"
+                   VerticalAlignment="Center"
                    HorizontalAlignment="Right" />
-            <ComboBox Grid.Column="1" Height="24" Width="180" Margin="10,0" HorizontalAlignment="Left"
+
+            <ComboBox Grid.Column="1" Grid.Row="1"
+                      Height="32" Width="160"
+                      Margin="10,0"
+                      HorizontalAlignment="Left"
                       VerticalAlignment="Center"
-                      Text="Please select a month" ItemContainerStyle="{DynamicResource theComboBoxItem}"
                       Name="MonthSelect" />
 
-            <Label Grid.Row="1" Content="Year" FontSize="14" FontWeight="Medium" VerticalAlignment="Center"
+            <Label Grid.Row="2" Grid.Column="0"
+                   Content="Year"
+                   FontSize="14"
+                   FontWeight="Medium"
+                   VerticalAlignment="Center"
                    HorizontalAlignment="Right" />
 
-            <TextBox Grid.Row="1" Grid.Column="1" Height="24" Width="180" Margin="10,0" HorizontalAlignment="Left"
+
+            <TextBox Grid.Row="2" Grid.Column="1"
+                     Height="32"
+                     Width="160"
+                     Margin="10,0"
+                     HorizontalAlignment="Left"
                      VerticalAlignment="Center"
+                     KeyDown="YearSelect_OnEnter"
+                     Name="YearSelect"
+                     PreviewTextInput="YearSelect_OnPreviewTextInput"
+                     Background="#f7f7f7"
+                     BorderBrush="#f2f2f2" TextChanged="YearSelect_OnTextChanged" VerticalContentAlignment="Center" />
+            <Label Grid.Column="0" Grid.Row="3"
+                   Grid.ColumnSpan="2"
+                   Name="LabelValidation"
+                   Foreground="Red"
+                   Margin="10,0"
+                   HorizontalAlignment="Center" />
 
-                     Name="YearSelect" />
+
         </Grid>
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+        <StackPanel Grid.Row="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center">
 
-            <Button Name="CancelButton" Width="120" Height="40" Click="CancelButton_OnClick" Content="Cancel"
+            <Button Width="120"
+                    Height="40"
+                    Click="CancelButton_OnClick"
+                    Content="Cancel"
                     Margin="5,0" />
-            <Button Name="SearchButton" Width="120" Height="40" Click="SearchButton_OnClick" Background="#0f324b"
-                    Foreground="White" Content="Select"
+            <Button Name="SearchButton"
+                    Width="120"
+                    Height="40"
+                    Click="SearchButton_OnClick"
+                    Background="#0f324b"
+                    Foreground="White"
+                    Content="Select"
                     Margin="5,0" />
         </StackPanel>
     </Grid>

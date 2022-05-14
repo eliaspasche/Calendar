@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Effects;
+using Calendar.Components;
 
 namespace Calendar
 {
@@ -46,12 +48,15 @@ namespace Calendar
         /// <param name="e"></param>
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
-            
-
             // Init calendar with current date
+            SetCalendarToToday();
+        }
+
+        private void SetCalendarToToday()
+        {
             SetCalenderSheet(DateTime.Today.Month.ToMonth(), DateTime.Today.Year);
         }
-        
+
 
         /// <summary>
         /// 
@@ -61,37 +66,50 @@ namespace Calendar
         public void SetCalenderSheet(Month month, int year)
         {
             ClearCalendarSheet();
-            
-            bool isLeap = CalendarService.IsLeapYear(year);
+
+            var isLeap = CalendarService.IsLeapYear(year);
 
             CurrentMonth.Content = month.StringLiteral();
             CurrentYear.Content = year;
 
-            int firstWeekday = CalendarService.GetWeekday(01, month, year).IntLiteral();
-            int daysCurrentMonth = month.NumberOfDays(isLeap);
-            int daysPrevMonth = month.PrevMonth().NumberOfDays(isLeap);
+            var firstWeekday = CalendarService.GetWeekday(01, month, year).IntLiteral() - 2;
+            var daysCurrentMonth = month.NumberOfDays(isLeap);
+            var daysPrevMonth = month.PrevMonth().NumberOfDays(isLeap);
 
-            for (var i = 1; i < 43; i++)
+            for (var i = 0; i < DatePanels.Children.Count; i++)
             {
-                var dayPanel = (Label) FindName($"DayPanel{i}");
+                var dayPanel = (DayPanel) DatePanels.Children[i];
 
-                if (i < firstWeekday)
+                if (i <= firstWeekday)
                 {
-                    dayPanel.Content = daysPrevMonth - firstWeekday + 1 + i;
-                    dayPanel.FontWeight = FontWeights.ExtraLight;
+                    dayPanel.Day = daysPrevMonth - firstWeekday + i;
+                    dayPanel.IsCurrentMonth = false;
                 }
 
-                else if (i >= firstWeekday && i < firstWeekday + daysCurrentMonth)
+                else if (i > firstWeekday && i <= firstWeekday + daysCurrentMonth)
                 {
-                    dayPanel.Content = i + 1 - firstWeekday;
-                    dayPanel.FontWeight = FontWeights.Bold;
+                    dayPanel.Day = i - firstWeekday;
+                    dayPanel.IsCurrentMonth = true;
                 }
 
                 else
                 {
-                    dayPanel.Content = i + 1 - firstWeekday - daysCurrentMonth;
-                    dayPanel.FontWeight = FontWeights.ExtraLight;
+                    dayPanel.Day = i - firstWeekday - daysCurrentMonth;
+                    dayPanel.IsCurrentMonth = false;
                 }
+            }
+
+            SetHolidays(month, year, firstWeekday);
+        }
+
+        private void SetHolidays(Month month, int year, int firstWeekday)
+        {
+            var holidays = month.HolidaysInThisMonth(year);
+
+            foreach (var holiday in holidays)
+            {
+                var dayPanel = (DayPanel) DatePanels.Children[holiday.ToDate(year).day + firstWeekday];
+                dayPanel.Holiday = holiday.StringLiteral();
             }
         }
 
@@ -100,11 +118,10 @@ namespace Calendar
         /// </summary>
         private void ClearCalendarSheet()
         {
-            for (var i = 1; i < 43; i++)
+            foreach (DayPanel dayPanel in DatePanels.Children)
             {
-                var dayPanel = (Label) FindName($"DayPanel{i}");
-                dayPanel.Content = "";
-                dayPanel.FontWeight = FontWeights.Normal;
+                dayPanel.Day = "";
+                dayPanel.Holiday = "";
             }
         }
 
@@ -137,6 +154,11 @@ namespace Calendar
             DateSelectModal modal = new DateSelectModal(this);
             Effect = new BlurEffect();
             modal.ShowDialog();
+        }
+
+        private void Today_OnClick(object sender, RoutedEventArgs e)
+        {
+            SetCalendarToToday();
         }
     }
 }

@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Calendar"
+        xmlns:c="clr-namespace:Calendar.Components"
         mc:Ignorable="d"
         Title="Calendar" Height="1000" Width="1200"
         WindowStyle="None"
@@ -12,9 +12,11 @@
         Background="White"
         Loaded="MainWindow_OnLoaded"
         WindowStartupLocation="CenterScreen">
-    
+
     <Window.Clip>
-        <RectangleGeometry Rect="0,0,1200,1000" RadiusX="10" RadiusY="10" />
+        <RectangleGeometry Rect="0,0,1200,1000" 
+                           RadiusX="10" 
+                           RadiusY="10" />
     </Window.Clip>
     <Border CornerRadius="4">
         <Grid>
@@ -33,10 +35,16 @@
             </Grid.ColumnDefinitions>
 
             <!-- Row for Heading -->
-            <Grid ColumnSpan="3" Background="#0f324b" MouseDown="MainGrid_EventHandler">
+            <Grid Grid.Row="0" Grid.Column="0" 
+                  ColumnSpan="3"
+                  Background="#0f324b" 
+                  MouseDown="MainGrid_EventHandler">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/../Assets/logo.png" Width="32" Margin="20 0 0 0" />
-                    <Label Foreground="White" Margin="16 0 0 0" FontWeight="Medium" FontSize="18"
+                    <Label Foreground="White"
+                           Margin="16 0 0 0"
+                           FontWeight="Medium"
+                           FontSize="18"
                            VerticalContentAlignment="Center">
                         Calendar
                     </Label>
@@ -46,8 +54,10 @@
 
             <!-- Button to close the application -->
             <Grid Grid.Row="0" Grid.Column="1" ColumnSpan="2">
-                <Button Name="CloseButton"
-                        Click="CloseButton_OnClick" HorizontalAlignment="Right" Width="40" Background="Transparent" BorderThickness="0">
+                <Button Click="CloseButton_OnClick"
+                        HorizontalAlignment="Right"
+                        Width="40" Background="Transparent"
+                        BorderThickness="0">
                     <Image Source="/../Assets/close.png" Width="22"></Image>
                 </Button>
             </Grid>
@@ -61,26 +71,57 @@
                 </Grid.ColumnDefinitions>
 
 
-                <Button Name="SelectDate" Height="40" Width="120" HorizontalAlignment="Left"
-                        Content="Select Date" Click="SelectDate_OnClick" FontWeight="Medium">
+                <Button
+                    Height="40"
+                    Width="120"
+                    HorizontalAlignment="Left"
+                    Content="Select Date"
+                    Click="SelectDate_OnClick"
+                    FontWeight="Medium">
                 </Button>
-                
 
-                <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 5 0">
-                    <Button Height="40" Width="60"
-                            HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5,0"
+
+                <StackPanel Grid.Column="1" Grid.ColumnSpan="2"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            Margin="0 0 5 0">
+
+                    <Button Height="40"
+                            Width="140"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Margin="5,0"
+                            Click="Today_OnClick" Content="Back to Today">
+
+                    </Button>
+                    <Button Height="40"
+                            Width="60"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Margin="5,0"
                             Click="PrevMonth_OnClick">
                         <Image Source="/../Assets/arrowBack.png" Height="24" />
                     </Button>
-                    <Button Height="40" Width="60"
-                            HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5,0"
+                    <Button Height="40"
+                            Width="60"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Margin="5,0"
                             Click="NextMonth_OnClick">
                         <Image Source="/../Assets/arrowForward.png" Height="24" />
                     </Button>
-                    <Label Content="Month" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="16"
-                           Width="100" HorizontalContentAlignment="Right" Name="CurrentMonth" />
-                    <Label Content="Year" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="16"
-                           Width="60" HorizontalContentAlignment="Left" Name="CurrentYear" />
+                    <Label Content="Month"
+                           VerticalContentAlignment="Center"
+                           FontWeight="Bold" FontSize="16"
+                           Width="100"
+                           HorizontalContentAlignment="Right"
+                           Name="CurrentMonth" />
+                    <Label Content="Year"
+                           VerticalContentAlignment="Center"
+                           FontWeight="Bold" FontSize="16"
+                           Width="60"
+                           HorizontalContentAlignment="Left"
+                           Name="CurrentYear" />
                 </StackPanel>
             </Grid>
 
@@ -99,45 +140,59 @@
                         </Grid.ColumnDefinitions>
 
                         <Grid Grid.Column="0" Grid.Row="0">
-                            <Label Content="Monday" HorizontalContentAlignment="Center"
+                            <Label Content="Monday"
+                                   HorizontalContentAlignment="Center"
                                    VerticalContentAlignment="Center"
-                                   FontWeight="Bold" />
+                                   FontWeight="Bold"
+                                   FontSize="14" />
                         </Grid>
                         <Grid Grid.Column="1" Grid.Row="0">
-                            <Label Content="Tuesday" HorizontalContentAlignment="Center"
+                            <Label Content="Tuesday"
+                                   HorizontalContentAlignment="Center"
                                    VerticalContentAlignment="Center"
-                                   FontWeight="Bold" />
+                                   FontWeight="Bold" FontSize="14" />
                         </Grid>
                         <Grid Grid.Column="2" Grid.Row="0">
-                            <Label Content="Wednesday" HorizontalContentAlignment="Center"
-                                   VerticalContentAlignment="Center" FontWeight="Bold" />
+                            <Label Content="Wednesday"
+                                   HorizontalContentAlignment="Center"
+                                   VerticalContentAlignment="Center"
+                                   FontWeight="Bold"
+                                   FontSize="14" />
                         </Grid>
                         <Grid Grid.Column="3" Grid.Row="0">
-                            <Label Content="Thursday" HorizontalContentAlignment="Center"
+                            <Label Content="Thursday"
+                                   HorizontalContentAlignment="Center"
                                    VerticalContentAlignment="Center"
-                                   FontWeight="Bold" />
+                                   FontWeight="Bold"
+                                   FontSize="14" />
                         </Grid>
                         <Grid Grid.Column="4" Grid.Row="0">
-                            <Label Content="Friday" HorizontalContentAlignment="Center"
+                            <Label Content="Friday"
+                                   HorizontalContentAlignment="Center"
                                    VerticalContentAlignment="Center"
-                                   FontWeight="Bold" />
+                                   FontWeight="Bold"
+                                   FontSize="14" />
                         </Grid>
                         <Grid Grid.Column="5" Grid.Row="0">
-                            <Label Content="Saturday" HorizontalContentAlignment="Center"
+                            <Label Content="Saturday"
+                                   HorizontalContentAlignment="Center"
                                    VerticalContentAlignment="Center"
-                                   FontWeight="Bold" />
+                                   FontWeight="Bold"
+                                   FontSize="14" />
                         </Grid>
                         <Grid Grid.Column="6" Grid.Row="0">
-                            <Label Content="Sunday" HorizontalContentAlignment="Center"
+                            <Label Content="Sunday"
+                                   HorizontalContentAlignment="Center"
                                    VerticalContentAlignment="Center"
-                                   FontWeight="Bold" />
+                                   FontWeight="Bold"
+                                   FontSize="14" />
                         </Grid>
                     </Grid>
                 </Border>
             </Grid>
 
             <!-- Calendar Grid -->
-            <Grid Grid.Row="3" Grid.Column="1">
+            <Grid Grid.Row="3" Grid.Column="1" Name="DatePanels">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
@@ -157,346 +212,62 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- Row 1 -->
-                <Grid Grid.Column="0" Grid.Row="0">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel1"></Label>
-                            <Border Margin="4 2 4 2" Background="#dbe4ff" BorderThickness="4 0 0 0"
-                                    BorderBrush="#0f324b"
-                                    CornerRadius="2" Visibility="Hidden" Name="HolidayBorder1">
-                                <Label Name="HolidayLabel1" />
-                            </Border>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-                <Grid Grid.Column="1" Grid.Row="0">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel2"></Label>
-                            <Border Margin="4 2 4 2" Background="#dbe4ff" BorderThickness="4 0 0 0"
-                                    BorderBrush="#0f324b"
-                                    CornerRadius="2" Visibility="Hidden" Name="HolidayBorder2">
-                                <Label Name="HolidayLabel2" />
-                            </Border>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-                <Grid Grid.Column="2" Grid.Row="0">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel3"></Label>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-                <Grid Grid.Column="3" Grid.Row="0">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel4"></Label>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-                <Grid Grid.Column="4" Grid.Row="0">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel5"></Label>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-                <Grid Grid.Column="5" Grid.Row="0">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel6"></Label>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-                <Grid Grid.Column="6" Grid.Row="0">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel7"></Label>
-                        </StackPanel>
-                    </Border>
-                </Grid>
+                <c:DayPanel Grid.Column="0" Grid.Row="0" />
+                <c:DayPanel Grid.Column="1" Grid.Row="0" />
+                <c:DayPanel Grid.Column="2" Grid.Row="0" />
+                <c:DayPanel Grid.Column="3" Grid.Row="0" />
+                <c:DayPanel Grid.Column="4" Grid.Row="0" />
+                <c:DayPanel Grid.Column="5" Grid.Row="0" />
+                <c:DayPanel Grid.Column="6" Grid.Row="0" />
+
 
                 <!-- Row 2 -->
-                <Grid Grid.Column="0" Grid.Row="1">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel8"></Label>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-                <Grid Grid.Column="1" Grid.Row="1">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel9"></Label>
-                            <Border Margin="4 2 4 2" Background="#dbe4ff" BorderThickness="4 0 0 0"
-                                    BorderBrush="#0f324b"
-                                    CornerRadius="2">
-                                <Label>National Holiday</Label>
-                            </Border>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-                <Grid Grid.Column="2" Grid.Row="1">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel10"></Label>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-                <Grid Grid.Column="3" Grid.Row="1">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel11"></Label>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-                <Grid Grid.Column="4" Grid.Row="1">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel12"></Label>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-                <Grid Grid.Column="5" Grid.Row="1">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel13"></Label>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-                <Grid Grid.Column="6" Grid.Row="1">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel14"></Label>
-                        </StackPanel>
-                    </Border>
-                </Grid>
+                <c:DayPanel Grid.Column="0" Grid.Row="1" />
+                <c:DayPanel Grid.Column="1" Grid.Row="1" />
+                <c:DayPanel Grid.Column="2" Grid.Row="1" />
+                <c:DayPanel Grid.Column="3" Grid.Row="1" />
+                <c:DayPanel Grid.Column="4" Grid.Row="1" />
+                <c:DayPanel Grid.Column="5" Grid.Row="1" />
+                <c:DayPanel Grid.Column="6" Grid.Row="1" />
+
 
                 <!-- Row 3 -->
-                <Grid Grid.Column="0" Grid.Row="2">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel15"></Label>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-                <Grid Grid.Column="1" Grid.Row="2">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel16"></Label>
-                            <Border Margin="4 2 4 2" Background="#dbe4ff" BorderThickness="4 0 0 0"
-                                    BorderBrush="#0f324b"
-                                    CornerRadius="2">
-                                <Label>National Holiday</Label>
-                            </Border>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-                <Grid Grid.Column="2" Grid.Row="2">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel17"></Label>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-                <Grid Grid.Column="3" Grid.Row="2">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel18"></Label>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-                <Grid Grid.Column="4" Grid.Row="2">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel19"></Label>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-                <Grid Grid.Column="5" Grid.Row="2">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel20"></Label>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-                <Grid Grid.Column="6" Grid.Row="2">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel21"></Label>
-                        </StackPanel>
-                    </Border>
-                </Grid>
+                <c:DayPanel Grid.Column="0" Grid.Row="2" />
+                <c:DayPanel Grid.Column="1" Grid.Row="2" />
+                <c:DayPanel Grid.Column="2" Grid.Row="2" />
+                <c:DayPanel Grid.Column="3" Grid.Row="2" />
+                <c:DayPanel Grid.Column="4" Grid.Row="2" />
+                <c:DayPanel Grid.Column="5" Grid.Row="2" />
+                <c:DayPanel Grid.Column="6" Grid.Row="2" />
+
 
                 <!-- Row 4 -->
-                <Grid Grid.Column="0" Grid.Row="3">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel22"></Label>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-                <Grid Grid.Column="1" Grid.Row="3">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel23"></Label>
-                            <Border Margin="4 2 4 2" Background="#dbe4ff" BorderThickness="4 0 0 0"
-                                    BorderBrush="#0f324b"
-                                    CornerRadius="2">
-                                <Label>National Holiday</Label>
-                            </Border>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-                <Grid Grid.Column="2" Grid.Row="3">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel24"></Label>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-                <Grid Grid.Column="3" Grid.Row="3">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel25"></Label>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-                <Grid Grid.Column="4" Grid.Row="3">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel26"></Label>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-                <Grid Grid.Column="5" Grid.Row="3">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel27"></Label>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-                <Grid Grid.Column="6" Grid.Row="3">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel28"></Label>
-                        </StackPanel>
-                    </Border>
-                </Grid>
+                <c:DayPanel Grid.Column="0" Grid.Row="3" />
+                <c:DayPanel Grid.Column="1" Grid.Row="3" />
+                <c:DayPanel Grid.Column="2" Grid.Row="3" />
+                <c:DayPanel Grid.Column="3" Grid.Row="3" />
+                <c:DayPanel Grid.Column="4" Grid.Row="3" />
+                <c:DayPanel Grid.Column="5" Grid.Row="3" />
+                <c:DayPanel Grid.Column="6" Grid.Row="3" />
+
 
                 <!-- Row 5 -->
-                <Grid Grid.Column="0" Grid.Row="4">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel29"></Label>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-                <Grid Grid.Column="1" Grid.Row="4">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel30"></Label>
-                            <Border Margin="4 2 4 2" Background="#dbe4ff" BorderThickness="4 0 0 0"
-                                    BorderBrush="#0f324b"
-                                    CornerRadius="2">
-                                <Label>National Holiday</Label>
-                            </Border>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-                <Grid Grid.Column="2" Grid.Row="4">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel31"></Label>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-                <Grid Grid.Column="3" Grid.Row="4">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel32"></Label>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-                <Grid Grid.Column="4" Grid.Row="4">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel33"></Label>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-                <Grid Grid.Column="5" Grid.Row="4">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel34"></Label>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-                <Grid Grid.Column="6" Grid.Row="4">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel35"></Label>
-                        </StackPanel>
-                    </Border>
-                </Grid>
+                <c:DayPanel Grid.Column="0" Grid.Row="4" />
+                <c:DayPanel Grid.Column="1" Grid.Row="4" />
+                <c:DayPanel Grid.Column="2" Grid.Row="4" />
+                <c:DayPanel Grid.Column="3" Grid.Row="4" />
+                <c:DayPanel Grid.Column="4" Grid.Row="4" />
+                <c:DayPanel Grid.Column="5" Grid.Row="4" />
+                <c:DayPanel Grid.Column="6" Grid.Row="4" />
 
-                <!-- Row 6 -->
-                <Grid Grid.Column="0" Grid.Row="5">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel36"></Label>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-                <Grid Grid.Column="1" Grid.Row="5">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel37"></Label>
-                            <Border Margin="4 2 4 2" Background="#dbe4ff" BorderThickness="4 0 0 0"
-                                    BorderBrush="#0f324b"
-                                    CornerRadius="2">
-                                <Label>National Holiday</Label>
-                            </Border>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-                <Grid Grid.Column="2" Grid.Row="5">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel38"></Label>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-                <Grid Grid.Column="3" Grid.Row="5">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel39"></Label>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-                <Grid Grid.Column="4" Grid.Row="5">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel40"></Label>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-                <Grid Grid.Column="5" Grid.Row="5">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel41"></Label>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-                <Grid Grid.Column="6" Grid.Row="5">
-                    <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
-                        <StackPanel>
-                            <Label Margin="10 0 0 0" Name="DayPanel42"></Label>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-
+                <!-- Row 5 -->
+                <c:DayPanel Grid.Column="0" Grid.Row="5" />
+                <c:DayPanel Grid.Column="1" Grid.Row="5" />
+                <c:DayPanel Grid.Column="2" Grid.Row="5" />
+                <c:DayPanel Grid.Column="3" Grid.Row="5" />
+                <c:DayPanel Grid.Column="4" Grid.Row="5" />
+                <c:DayPanel Grid.Column="5" Grid.Row="5" />
+                <c:DayPanel Grid.Column="6" Grid.Row="5" />
             </Grid>
         </Grid>
     </Border>
