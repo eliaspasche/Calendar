@@ -1,0 +1,69 @@
+﻿<Window x:Class="Calendar.DateSelectModal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:Calendar"
+        mc:Ignorable="d"
+        Title="Select Date" Height="350" Width="300"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        AllowsTransparency="True"
+        Loaded="DateSelectModal_OnLoaded" WindowStartupLocation="CenterOwner">
+    <Window.Clip>
+        <RectangleGeometry Rect="0,0,300,350" RadiusX="10" RadiusY="10" />
+    </Window.Clip>
+        
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="250" />
+            <RowDefinition Height="60" />
+
+        </Grid.RowDefinitions>
+
+        <!-- Row for Heading -->
+        <Grid Background="#f7f7f7" MouseDown="ModalHeading_EventHandler">
+
+            <Label Foreground="Black" Margin="16 0 0 0" FontWeight="Medium" FontSize="15"
+                   VerticalContentAlignment="Center">
+                Select a Date
+            </Label>
+        </Grid>
+
+        <Grid Margin="20" Height="100" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Label Content="Month" FontSize="14" FontWeight="Medium" VerticalAlignment="Center"
+                   HorizontalAlignment="Right" />
+            <ComboBox Grid.Column="1" Height="24" Width="180" Margin="10,0" HorizontalAlignment="Left"
+                      VerticalAlignment="Center"
+                      Text="Please select a month" ItemContainerStyle="{DynamicResource theComboBoxItem}"
+                      Name="MonthSelect" />
+
+            <Label Grid.Row="1" Content="Year" FontSize="14" FontWeight="Medium" VerticalAlignment="Center"
+                   HorizontalAlignment="Right" />
+
+            <TextBox Grid.Row="1" Grid.Column="1" Height="24" Width="180" Margin="10,0" HorizontalAlignment="Left"
+                     VerticalAlignment="Center"
+
+                     Name="YearSelect" />
+        </Grid>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+
+            <Button Name="CancelButton" Width="120" Height="40" Click="CancelButton_OnClick" Content="Cancel"
+                    Margin="5,0" />
+            <Button Name="SearchButton" Width="120" Height="40" Click="SearchButton_OnClick" Background="#0f324b"
+                    Foreground="White" Content="Select"
+                    Margin="5,0" />
+        </StackPanel>
+    </Grid>
+</Window>
