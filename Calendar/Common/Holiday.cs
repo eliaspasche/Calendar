@@ -1,9 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Calendar;
 
+/// <summary>
+/// 
+/// </summary>
 public enum Holiday
 {
     NEW_YEAR,
@@ -20,8 +22,17 @@ public enum Holiday
     BOXING_DAY,
 }
 
+/// <summary>
+/// 
+/// </summary>
 public static class HolidayExtensions
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="holiday"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static string StringLiteral(this Holiday holiday) => holiday switch
     {
         Holiday.NEW_YEAR => "New Year's Day",
@@ -39,6 +50,13 @@ public static class HolidayExtensions
         _ => throw new ArgumentOutOfRangeException(nameof(holiday), holiday, null)
     };
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="holiday"></param>
+    /// <param name="year"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static CustomDate ToDate(this Holiday holiday, int year)
     {
         int easter = CalcEasterInt(year);
@@ -61,6 +79,13 @@ public static class HolidayExtensions
         };
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="month"></param>
+    /// <param name="year"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static List<Holiday> HolidaysInThisMonth(this Month month, int year)
     {
         List<Holiday> holidays;
@@ -115,12 +140,12 @@ public static class HolidayExtensions
                 return holidays;
             case Month.MAY:
                 holidays = new List<Holiday> {Holiday.MAYDAY};
-                
+
                 if (Holiday.ASCENSION_DAY.ToDate(year).month == Month.MAY)
                 {
                     holidays.Add(Holiday.ASCENSION_DAY);
                 }
-                
+
                 if (Holiday.WHIT_SUNDAY.ToDate(year).month == Month.MAY)
                 {
                     holidays.Add(Holiday.WHIT_SUNDAY);
@@ -181,6 +206,11 @@ public static class HolidayExtensions
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="year"></param>
+    /// <returns></returns>
     private static int CalcEasterInt(int year)
     {
         int k = year / 100;
@@ -196,6 +226,11 @@ public static class HolidayExtensions
         return og + oe;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="day"></param>
+    /// <returns></returns>
     private static CustomDate FromIntToDate(int day)
     {
         if (day <= 31)

@@ -1,5 +1,8 @@
 ﻿namespace Calendar;
 
+/// <summary>
+/// 
+/// </summary>
 public class MonthOffset
 {
     public int commonYear { get; set; }

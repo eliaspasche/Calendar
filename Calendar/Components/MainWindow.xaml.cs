@@ -100,6 +100,28 @@ namespace Calendar
             }
 
             SetHolidays(month, year, firstWeekday);
+            SetMonthButtons(month, year);
+        }
+
+        private void SetMonthButtons(Month month, int year)
+        {
+            if (month == Month.DECEMBER && year == 3000)
+            {
+                NextMonth_Button.IsEnabled = false;
+            }
+            else
+            {
+                NextMonth_Button.IsEnabled = true;
+            }
+
+            if (month == Month.OCTOBER && year == 1582)
+            {
+                PrevMonth_Button.IsEnabled = false;
+            }
+            else
+            {
+                PrevMonth_Button.IsEnabled = true;
+            }
         }
 
         private void SetHolidays(Month month, int year, int firstWeekday)
@@ -132,8 +154,9 @@ namespace Calendar
         /// <param name="e"></param>
         private void NextMonth_OnClick(object sender, RoutedEventArgs e)
         {
-            Month nextMonth = CurrentMonth.Content.ToString()!.ToMonth().NextMonth();
-            int nextYear = nextMonth == Month.JANUARY ? (int) CurrentYear.Content + 1 : (int) CurrentYear.Content;
+            var nextMonth = CurrentMonth.Content.ToString()!.ToMonth().NextMonth();
+            var nextYear = nextMonth == Month.JANUARY ? (int) CurrentYear.Content + 1 : (int) CurrentYear.Content;
+
             SetCalenderSheet(nextMonth, nextYear);
         }
 
@@ -144,8 +167,8 @@ namespace Calendar
         /// <param name="e"></param>
         private void PrevMonth_OnClick(object sender, RoutedEventArgs e)
         {
-            Month prevMonth = CurrentMonth.Content.ToString()!.ToMonth().PrevMonth();
-            int prevYear = prevMonth == Month.DECEMBER ? (int) CurrentYear.Content - 1 : (int) CurrentYear.Content;
+            var prevMonth = CurrentMonth.Content.ToString()!.ToMonth().PrevMonth();
+            var prevYear = prevMonth == Month.DECEMBER ? (int) CurrentYear.Content - 1 : (int) CurrentYear.Content;
             SetCalenderSheet(prevMonth, prevYear);
         }
 

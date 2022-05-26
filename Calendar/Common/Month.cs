@@ -2,6 +2,9 @@
 
 namespace Calendar;
 
+/// <summary>
+/// 
+/// </summary>
 public enum Month
 {
     JANUARY,
@@ -18,8 +21,17 @@ public enum Month
     DECEMBER
 }
 
+/// <summary>
+/// 
+/// </summary>
 public static class MonthExtensions
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="month"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static int IntLiteral(this Month month) => month switch
     {
         Month.JANUARY => 1,
@@ -37,6 +49,12 @@ public static class MonthExtensions
         _ => throw new ArgumentOutOfRangeException(nameof(month), month, null)
     };
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="month"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static MonthOffset Offset(this Month month) => month switch
     {
         Month.JANUARY => new MonthOffset(0, 0),
@@ -54,7 +72,12 @@ public static class MonthExtensions
         _ => throw new ArgumentOutOfRangeException(nameof(month), month, null)
     };
 
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="month"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static string StringLiteral(this Month month) => month switch
     {
         Month.JANUARY => "January",
@@ -72,6 +95,12 @@ public static class MonthExtensions
         _ => throw new ArgumentOutOfRangeException(nameof(month), month, null)
     };
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="stringLiteral"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static Month ToMonth(this string stringLiteral) => stringLiteral switch
     {
         "January" => Month.JANUARY,
@@ -88,7 +117,13 @@ public static class MonthExtensions
         "December" => Month.DECEMBER,
         _ => throw new ArgumentOutOfRangeException(nameof(stringLiteral), stringLiteral, null)
     };
-    
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="intLiteral"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static Month ToMonth(this int intLiteral) => intLiteral switch
     {
         1 => Month.JANUARY,
@@ -106,6 +141,13 @@ public static class MonthExtensions
         _ => throw new ArgumentOutOfRangeException(nameof(intLiteral), intLiteral, null)
     };
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="month"></param>
+    /// <param name="leapYear"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static int NumberOfDays(this Month month, bool leapYear) => month switch
     {
         Month.JANUARY => 31,
@@ -123,6 +165,12 @@ public static class MonthExtensions
         _ => throw new ArgumentOutOfRangeException(nameof(month), month, null)
     };
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="month"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static Month NextMonth(this Month month) => month switch
     {
         Month.JANUARY => Month.FEBRUARY,
@@ -139,7 +187,13 @@ public static class MonthExtensions
         Month.DECEMBER => Month.JANUARY,
         _ => throw new ArgumentOutOfRangeException(nameof(month), month, null)
     };
-    
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="month"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static Month PrevMonth(this Month month) => month switch
     {
         Month.JANUARY => Month.DECEMBER,

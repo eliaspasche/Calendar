@@ -2,6 +2,9 @@
 
 namespace Calendar;
 
+/// <summary>
+/// 
+/// </summary>
 public enum Weekday
 {
     MONDAY,
@@ -13,8 +16,17 @@ public enum Weekday
     SUNDAY
 }
 
+/// <summary>
+/// 
+/// </summary>
 public static class WeekdayExtension
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="weekday"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static int IntLiteral(this Weekday weekday) => weekday switch
     {
         Weekday.MONDAY => 1,
@@ -27,6 +39,12 @@ public static class WeekdayExtension
         _ => throw new ArgumentOutOfRangeException(nameof(weekday), weekday, null)
     };
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="weekday"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static Weekday ToWeekday(this int weekday) => weekday switch
     {
         1 => Weekday.MONDAY,

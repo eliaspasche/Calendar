@@ -119,13 +119,14 @@
                     Height="40"
                     Click="CancelButton_OnClick"
                     Content="Cancel"
-                    Margin="5,0" />
+                    Margin="5,0"
+                    BorderBrush="White"
+                    Background="White"
+                    FontWeight="Normal"/>
             <Button Name="SearchButton"
                     Width="120"
                     Height="40"
                     Click="SearchButton_OnClick"
-                    Background="#0f324b"
-                    Foreground="White"
                     Content="Select"
                     Margin="5,0" />
         </StackPanel>

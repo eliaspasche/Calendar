@@ -14,8 +14,8 @@
         WindowStartupLocation="CenterScreen">
 
     <Window.Clip>
-        <RectangleGeometry Rect="0,0,1200,1000" 
-                           RadiusX="10" 
+        <RectangleGeometry Rect="0,0,1200,1000"
+                           RadiusX="10"
                            RadiusY="10" />
     </Window.Clip>
     <Border CornerRadius="4">
@@ -35,9 +35,9 @@
             </Grid.ColumnDefinitions>
 
             <!-- Row for Heading -->
-            <Grid Grid.Row="0" Grid.Column="0" 
+            <Grid Grid.Row="0" Grid.Column="0"
                   ColumnSpan="3"
-                  Background="#0f324b" 
+                  Background="#0f324b"
                   MouseDown="MainGrid_EventHandler">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/../Assets/logo.png" Width="32" Margin="20 0 0 0" />
@@ -99,7 +99,8 @@
                             HorizontalContentAlignment="Center"
                             VerticalContentAlignment="Center"
                             Margin="5,0"
-                            Click="PrevMonth_OnClick">
+                            Click="PrevMonth_OnClick"
+                            Name="PrevMonth_Button">
                         <Image Source="/../Assets/arrowBack.png" Height="24" />
                     </Button>
                     <Button Height="40"
@@ -107,7 +108,8 @@
                             HorizontalContentAlignment="Center"
                             VerticalContentAlignment="Center"
                             Margin="5,0"
-                            Click="NextMonth_OnClick">
+                            Click="NextMonth_OnClick"
+                            Name="NextMonth_Button">
                         <Image Source="/../Assets/arrowForward.png" Height="24" />
                     </Button>
                     <Label Content="Month"

@@ -86,6 +86,22 @@ public partial class DateSelectModal : Window
 
     private void YearSelect_OnTextChanged(object sender, TextChangedEventArgs e)
     {
+        if (MonthSelect.Items.Count != 12)
+        {
+            FillDropdown();
+            MonthSelect.SelectedItem = Month.OCTOBER.StringLiteral();
+        }
+
+        if (YearSelect.Text == "1582")
+        {
+            for (var i = 0; i < 9; i++)
+            {
+                MonthSelect.Items.RemoveAt(0);
+            }
+            
+            MonthSelect.SelectedItem = Month.OCTOBER.StringLiteral();
+        }
+
         if (ValidateYear(YearSelect.Text))
         {
             LabelValidation.Content = "";

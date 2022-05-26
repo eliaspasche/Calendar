@@ -4,6 +4,9 @@ using System.Windows.Media;
 
 namespace Calendar.Components;
 
+/// <summary>
+/// 
+/// </summary>
 public partial class DayPanel : UserControl
 {
     private bool _isCurrentMonth;

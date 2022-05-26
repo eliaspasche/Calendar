@@ -1,5 +1,8 @@
 ﻿namespace Calendar;
 
+/// <summary>
+/// 
+/// </summary>
 public class CustomDate
 {
     public int day { get; set; }
