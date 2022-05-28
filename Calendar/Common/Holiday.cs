@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+// ReSharper disable InconsistentNaming
 
-namespace Calendar;
+namespace Calendar.Common;
 
 /// <summary>
-/// 
+/// Enum containing all national holidays.
 /// </summary>
 public enum Holiday
 {
@@ -23,15 +24,15 @@ public enum Holiday
 }
 
 /// <summary>
-/// 
+/// Contains various extension methods that can be used to calculate and manage holidays.
 /// </summary>
 public static class HolidayExtensions
 {
     /// <summary>
-    /// 
+    /// Returns the name of the national holiday to the given enum.
     /// </summary>
-    /// <param name="holiday"></param>
-    /// <returns></returns>
+    /// <param name="holiday">National holiday for which the name is required</param>
+    /// <returns>Name of the national holiday as string</returns>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static string StringLiteral(this Holiday holiday) => holiday switch
     {
@@ -51,26 +52,26 @@ public static class HolidayExtensions
     };
 
     /// <summary>
-    /// 
+    /// Returns a CustomDate for the given national holiday in the year passed.
     /// </summary>
-    /// <param name="holiday"></param>
-    /// <param name="year"></param>
-    /// <returns></returns>
+    /// <param name="holiday">National holiday for which the date is required</param>
+    /// <param name="year">Year to calculate the date of the holiday</param>
+    /// <returns>Day and month of the given national holiday</returns>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static CustomDate ToDate(this Holiday holiday, int year)
     {
-        int easter = CalcEasterInt(year);
+        var easter = CalcEasterInt(year);
 
         return holiday switch
         {
             Holiday.NEW_YEAR => new CustomDate(1, Month.JANUARY),
-            Holiday.GOOD_FRIDAY => FromIntToDate(easter - 2),
-            Holiday.EASTER => FromIntToDate(easter),
-            Holiday.EASTER_MONDAY => FromIntToDate(easter + 1),
+            Holiday.GOOD_FRIDAY => FromIntToDate(easter - 2, year),
+            Holiday.EASTER => FromIntToDate(easter, year),
+            Holiday.EASTER_MONDAY => FromIntToDate(easter + 1, year),
             Holiday.MAYDAY => new CustomDate(1, Month.MAY),
-            Holiday.ASCENSION_DAY => FromIntToDate(easter + 39),
-            Holiday.WHIT_SUNDAY => FromIntToDate(easter + 49),
-            Holiday.WHIT_MONDAY => FromIntToDate(easter + 50),
+            Holiday.ASCENSION_DAY => FromIntToDate(easter + 39, year),
+            Holiday.WHIT_SUNDAY => FromIntToDate(easter + 49, year),
+            Holiday.WHIT_MONDAY => FromIntToDate(easter + 50, year),
             Holiday.DAY_OF_GERMANY => new CustomDate(3, Month.OCTOBER),
             Holiday.REFORMATION_DAY => new CustomDate(31, Month.OCTOBER),
             Holiday.CHRISTMAS => new CustomDate(25, Month.DECEMBER),
@@ -80,110 +81,132 @@ public static class HolidayExtensions
     }
 
     /// <summary>
-    /// 
+    /// Returns a list of national holidays for a given month and year.
     /// </summary>
-    /// <param name="month"></param>
-    /// <param name="year"></param>
-    /// <returns></returns>
+    /// <param name="month">month for which national holidays are required</param>
+    /// <param name="year">year for which national holidays are required</param>
+    /// <returns>list with national holidays</returns>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static List<Holiday> HolidaysInThisMonth(this Month month, int year)
     {
         List<Holiday> holidays;
-
         switch (month)
         {
+            // holidays in january
             case Month.JANUARY:
                 holidays = new List<Holiday> {Holiday.NEW_YEAR};
                 return holidays;
+            
+            // holiday in february
             case Month.FEBRUARY:
                 return new List<Holiday>();
+            
+            // holiday in march
+            // Easter could be in march
             case Month.MARCH:
                 holidays = new List<Holiday>();
-                if (Holiday.GOOD_FRIDAY.ToDate(year).month == Month.MARCH)
+                if (Holiday.GOOD_FRIDAY.ToDate(year).Month == Month.MARCH)
                 {
                     holidays.Add(Holiday.GOOD_FRIDAY);
                 }
 
-                if (Holiday.EASTER.ToDate(year).month == Month.MARCH)
+                if (Holiday.EASTER.ToDate(year).Month == Month.MARCH)
                 {
                     holidays.Add(Holiday.EASTER);
                 }
 
-                if (Holiday.EASTER_MONDAY.ToDate(year).month == Month.MARCH)
+                if (Holiday.EASTER_MONDAY.ToDate(year).Month == Month.MARCH)
                 {
                     holidays.Add(Holiday.EASTER_MONDAY);
                 }
 
                 return holidays;
+            
+            // holiday in april
+            // Easter could be in april
+            // Ascension day could be in april
             case Month.APRIL:
                 holidays = new List<Holiday>();
-                if (Holiday.GOOD_FRIDAY.ToDate(year).month == Month.APRIL)
+                if (Holiday.GOOD_FRIDAY.ToDate(year).Month == Month.APRIL)
                 {
                     holidays.Add(Holiday.GOOD_FRIDAY);
                 }
 
-                if (Holiday.EASTER.ToDate(year).month == Month.APRIL)
+                if (Holiday.EASTER.ToDate(year).Month == Month.APRIL)
                 {
                     holidays.Add(Holiday.EASTER);
                 }
 
-                if (Holiday.EASTER_MONDAY.ToDate(year).month == Month.APRIL)
+                if (Holiday.EASTER_MONDAY.ToDate(year).Month == Month.APRIL)
                 {
                     holidays.Add(Holiday.EASTER_MONDAY);
                 }
 
-                if (Holiday.ASCENSION_DAY.ToDate(year).month == Month.APRIL)
+                if (Holiday.ASCENSION_DAY.ToDate(year).Month == Month.APRIL)
                 {
                     holidays.Add(Holiday.ASCENSION_DAY);
                 }
 
                 return holidays;
+            
+            // holiday in may
+            // Ascension day could be in may
+            // Whit sunday/monday could be in may
             case Month.MAY:
                 holidays = new List<Holiday> {Holiday.MAYDAY};
 
-                if (Holiday.ASCENSION_DAY.ToDate(year).month == Month.MAY)
+                if (Holiday.ASCENSION_DAY.ToDate(year).Month == Month.MAY)
                 {
                     holidays.Add(Holiday.ASCENSION_DAY);
                 }
 
-                if (Holiday.WHIT_SUNDAY.ToDate(year).month == Month.MAY)
+                if (Holiday.WHIT_SUNDAY.ToDate(year).Month == Month.MAY)
                 {
                     holidays.Add(Holiday.WHIT_SUNDAY);
                 }
 
-                if (Holiday.WHIT_MONDAY.ToDate(year).month == Month.MAY)
+                if (Holiday.WHIT_MONDAY.ToDate(year).Month == Month.MAY)
                 {
                     holidays.Add(Holiday.WHIT_MONDAY);
                 }
 
                 return holidays;
+            
+            // holiday in june
+            // Ascension day could be in june
+            // Whit sunday/monday could be in june
             case Month.JUNE:
                 holidays = new List<Holiday>();
-                if (Holiday.ASCENSION_DAY.ToDate(year).month == Month.JUNE)
+                if (Holiday.ASCENSION_DAY.ToDate(year).Month == Month.JUNE)
                 {
                     holidays.Add(Holiday.ASCENSION_DAY);
                 }
 
-                if (Holiday.WHIT_SUNDAY.ToDate(year).month == Month.JUNE)
+                if (Holiday.WHIT_SUNDAY.ToDate(year).Month == Month.JUNE)
                 {
                     holidays.Add(Holiday.WHIT_SUNDAY);
                 }
 
-                if (Holiday.WHIT_MONDAY.ToDate(year).month == Month.JUNE)
+                if (Holiday.WHIT_MONDAY.ToDate(year).Month == Month.JUNE)
                 {
                     holidays.Add(Holiday.WHIT_MONDAY);
                 }
 
                 return holidays;
+            
+            // holiday in july
             case Month.JULY:
                 return new List<Holiday>();
 
+            // holiday in august
             case Month.AUGUST:
                 return new List<Holiday>();
 
+            // holiday in september
             case Month.SEPTEMBER:
                 return new List<Holiday>();
 
+            // holiday in october
             case Month.OCTOBER:
                 holidays = new List<Holiday>
                 {
@@ -191,9 +214,12 @@ public static class HolidayExtensions
                     Holiday.REFORMATION_DAY
                 };
                 return holidays;
+            
+            // holiday in november
             case Month.NOVEMBER:
                 return new List<Holiday>();
 
+            // holiday in december
             case Month.DECEMBER:
                 holidays = new List<Holiday>
                 {
@@ -204,53 +230,81 @@ public static class HolidayExtensions
             default:
                 throw new ArgumentOutOfRangeException(nameof(month), month, null);
         }
+
     }
 
     /// <summary>
-    /// 
+    /// Calculate the date for Easter Sunday in a given year and returns this date as the n-th of march.
+    /// The calculation is based on the Gaussian Easter Sunday algorithm:
+    /// <a href="https://de.wikipedia.org/wiki/Gau%C3%9Fsche_Osterformel#Eine_erg%C3%A4nzte_Osterformel">See on Wikipedia</a>
     /// </summary>
     /// <param name="year"></param>
     /// <returns></returns>
     private static int CalcEasterInt(int year)
     {
-        int k = year / 100;
-        int m = 15 + (3 * k + 3) / 4 - (8 * k + 13) / 25;
-        int s = 2 - (3 * k + 3) / 4;
-        int a = year % 19;
-        int d = (19 * a + m) % 30;
-        int r = (d + a / 11) / 29;
-        int og = 21 + d - r;
-        int sz = 7 - (year + year / 4 + s) % 7;
-        int oe = 7 - (og - sz) % 7;
+        // secular number
+        var k = year / 100;
+        
+        // secular moon circuit
+        var m = 15 + (3 * k + 3) / 4 - (8 * k + 13) / 25;
+        
+        // secular sun circuit
+        var s = 2 - (3 * k + 3) / 4;
+        
+        // moon parameter
+        var a = year % 19;
+        
+        // germ for the first full moon in the spring
+        var d = (19 * a + m) % 30;
+        
+        // calendrical correction value
+        var r = (d + a / 11) / 29;
+        
+        // easter border
+        var og = 21 + d - r;
+        
+        // first sunday in march
+        var sz = 7 - (year + year / 4 + s) % 7;
+        
+        // the distance of Easter Sunday from the Easter border
+        var oe = 7 - (og - sz) % 7;
 
+        
+        // Easter Sunday as n-th march
         return og + oe;
     }
 
     /// <summary>
-    /// 
+    /// Calculates and returns the n-th march as a CustomDate. This integer is the result of the
+    /// Gaussian algorithm for calculating Easter Sunday. 
     /// </summary>
-    /// <param name="day"></param>
-    /// <returns></returns>
-    private static CustomDate FromIntToDate(int day)
+    /// <param name="day">n-th march from Gaussian Easter Sunday algorithm</param>
+    /// <param name="year">current year is needed for the calculation of the number of days in February</param>
+    /// <returns>calculated n-th march</returns>
+    private static CustomDate FromIntToDate(int day, int year)
     {
-        if (day <= 31)
+        // Check if the day we are looking for is in march
+        if (day <= Month.MARCH.NumberOfDays(year))
         {
             return new CustomDate(day, Month.MARCH);
         }
 
-        int dayApril = day - 31;
-        if (dayApril <= 30)
+        // Check if the day we are looking for is in april
+        var dayApril = day - Month.MARCH.NumberOfDays(year);
+        if (dayApril <= Month.APRIL.NumberOfDays(year))
         {
             return new CustomDate(dayApril, Month.APRIL);
         }
 
-        int dayMay = dayApril - 30;
-        if (dayMay <= 31)
+        // Check if the day we are looking for is in may
+        var dayMay = dayApril - Month.APRIL.NumberOfDays(year);
+        if (dayMay <= Month.MAY.NumberOfDays(year))
         {
             return new CustomDate(dayMay, Month.MAY);
         }
 
-        int dayJune = dayMay - 31;
+        // Check if the day we are looking for is in june
+        var dayJune = dayMay - Month.MAY.NumberOfDays(year);
         return new CustomDate(dayJune, Month.JUNE);
     }
 }

@@ -1,18 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Effects;
-using Calendar.Components;
+using Calendar.Common;
+using Calendar.Services;
 
-namespace Calendar
+namespace Calendar.Components
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
+        /// <summary>
+        /// Constructor to initialize the window.
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
@@ -32,7 +34,7 @@ namespace Calendar
         }
 
         /// <summary>
-        /// OnClick Handler for the close button. Closes the application.
+        /// Handles clicks on the close button. Closes the application.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -42,7 +44,7 @@ namespace Calendar
         }
 
         /// <summary>
-        /// 
+        /// Runs immediately after the window is loaded. The method is used to fill in the current data. 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -52,6 +54,9 @@ namespace Calendar
             SetCalendarToToday();
         }
 
+        /// <summary>
+        /// Displays the data of the current month in the calendar sheet.
+        /// </summary>
         private void SetCalendarToToday()
         {
             SetCalenderSheet(DateTime.Today.Month.ToMonth(), DateTime.Today.Year);
@@ -59,7 +64,8 @@ namespace Calendar
 
 
         /// <summary>
-        /// 
+        /// Displays the days of the given month in the calender sheet (including national holidays and the last days
+        /// of the previous month as well as the first days of the next month).
         /// </summary>
         /// <param name="month"></param>
         /// <param name="year"></param>
@@ -67,31 +73,38 @@ namespace Calendar
         {
             ClearCalendarSheet();
 
-            var isLeap = CalendarService.IsLeapYear(year);
-
+            // sets the labels for current month and year
             CurrentMonth.Content = month.StringLiteral();
             CurrentYear.Content = year;
 
+            // determine the integer value of the weekday of the first day of the given month
             var firstWeekday = CalendarService.GetWeekday(01, month, year).IntLiteral() - 2;
-            var daysCurrentMonth = month.NumberOfDays(isLeap);
-            var daysPrevMonth = month.PrevMonth().NumberOfDays(isLeap);
 
+            // get the number of days of the current and last month
+            var daysCurrentMonth = month.NumberOfDays(year);
+            var daysPrevMonth = month.PrevMonth().NumberOfDays(year);
+
+            // loop through all day panels in the calendar sheet
             for (var i = 0; i < DatePanels.Children.Count; i++)
             {
+                // select the working DayPanel of this loop
                 var dayPanel = (DayPanel) DatePanels.Children[i];
 
+                // display the last days of the previous month
                 if (i <= firstWeekday)
                 {
                     dayPanel.Day = daysPrevMonth - firstWeekday + i;
                     dayPanel.IsCurrentMonth = false;
                 }
 
+                // display the days of the current month
                 else if (i > firstWeekday && i <= firstWeekday + daysCurrentMonth)
                 {
                     dayPanel.Day = i - firstWeekday;
                     dayPanel.IsCurrentMonth = true;
                 }
 
+                // display the first days of the next month
                 else
                 {
                     dayPanel.Day = i - firstWeekday - daysCurrentMonth;
@@ -99,44 +112,65 @@ namespace Calendar
                 }
             }
 
+            // set the holidays for the current month
             SetHolidays(month, year, firstWeekday);
+
+            // set the prev/next month buttons
             SetMonthButtons(month, year);
         }
 
+        /// <summary>
+        /// Determines whether the buttons to switch to the previous or next month are enabled or disabled.
+        /// This prevents leaving the allowed range of the calendar
+        /// </summary>
+        /// <param name="month"></param>
+        /// <param name="year"></param>
         private void SetMonthButtons(Month month, int year)
         {
+            // If the current month/year is december 3000 then the next month button should be disabled
             if (month == Month.DECEMBER && year == 3000)
             {
-                NextMonth_Button.IsEnabled = false;
+                NextMonthButton.IsEnabled = false;
             }
+            // re-enable the button if it is unnecessarily disabled
             else
             {
-                NextMonth_Button.IsEnabled = true;
+                NextMonthButton.IsEnabled = true;
             }
 
+            // If the current month/year is october 1582 then the previous month button should be disabled
             if (month == Month.OCTOBER && year == 1582)
             {
-                PrevMonth_Button.IsEnabled = false;
+                PrevMonthButton.IsEnabled = false;
             }
+            // re-enable the button if it is unnecessarily disabled
             else
             {
-                PrevMonth_Button.IsEnabled = true;
+                PrevMonthButton.IsEnabled = true;
             }
         }
 
+        /// <summary>
+        /// Retrieves the holidays for the given month and displays the holidays in the correct day panels.
+        /// </summary>
+        /// <param name="month"></param>
+        /// <param name="year"></param>
+        /// <param name="firstWeekday"></param>
         private void SetHolidays(Month month, int year, int firstWeekday)
         {
+            // get holidays of this month
             var holidays = month.HolidaysInThisMonth(year);
 
+            // display the holidays
             foreach (var holiday in holidays)
             {
-                var dayPanel = (DayPanel) DatePanels.Children[holiday.ToDate(year).day + firstWeekday];
+                var dayPanel = (DayPanel) DatePanels.Children[holiday.ToDate(year).Day + firstWeekday];
                 dayPanel.Holiday = holiday.StringLiteral();
             }
         }
 
         /// <summary>
-        /// Clears the whole calendar sheet to prepare the Calendar to show further information.
+        /// Clears the whole calendar sheet to prepare the calendar to show new data.
         /// </summary>
         private void ClearCalendarSheet()
         {
@@ -148,12 +182,13 @@ namespace Calendar
         }
 
         /// <summary>
-        /// 
+        /// Handles clicks on the next moth button.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void NextMonth_OnClick(object sender, RoutedEventArgs e)
         {
+            // determine the next month and year
             var nextMonth = CurrentMonth.Content.ToString()!.ToMonth().NextMonth();
             var nextYear = nextMonth == Month.JANUARY ? (int) CurrentYear.Content + 1 : (int) CurrentYear.Content;
 
@@ -161,24 +196,36 @@ namespace Calendar
         }
 
         /// <summary>
-        /// 
+        /// Handles clicks on the previous month button. 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void PrevMonth_OnClick(object sender, RoutedEventArgs e)
         {
+            // determine the previous month and year
             var prevMonth = CurrentMonth.Content.ToString()!.ToMonth().PrevMonth();
             var prevYear = prevMonth == Month.DECEMBER ? (int) CurrentYear.Content - 1 : (int) CurrentYear.Content;
+
             SetCalenderSheet(prevMonth, prevYear);
         }
 
+        /// <summary>
+        /// Handles clicks on the select date button. This will open the select date modal window.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SelectDate_OnClick(object sender, RoutedEventArgs e)
         {
-            DateSelectModal modal = new DateSelectModal(this);
+            var modal = new DateSelectModal(this);
             Effect = new BlurEffect();
             modal.ShowDialog();
         }
 
+        /// <summary>
+        /// Handles clicks on the today button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Today_OnClick(object sender, RoutedEventArgs e)
         {
             SetCalendarToToday();

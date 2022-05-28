@@ -1,9 +1,11 @@
 ﻿using System;
 
-namespace Calendar;
+// ReSharper disable InconsistentNaming
+
+namespace Calendar.Common;
 
 /// <summary>
-/// 
+/// Enum containing all weekdays.
 /// </summary>
 public enum Weekday
 {
@@ -17,15 +19,15 @@ public enum Weekday
 }
 
 /// <summary>
-/// 
+/// Contains various extension methods that can be used to calculate and manage weekdays.
 /// </summary>
 public static class WeekdayExtension
 {
     /// <summary>
-    /// 
+    /// Returns the integer value of a given weekday from 1 to 7.
     /// </summary>
     /// <param name="weekday"></param>
-    /// <returns></returns>
+    /// <returns>integer value of a weekday</returns>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static int IntLiteral(this Weekday weekday) => weekday switch
     {
@@ -40,10 +42,10 @@ public static class WeekdayExtension
     };
 
     /// <summary>
-    /// 
+    /// Returns the corresponding weekday of a given integer value between 1 and 7.
     /// </summary>
     /// <param name="weekday"></param>
-    /// <returns></returns>
+    /// <returns>corresponding enum item</returns>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static Weekday ToWeekday(this int weekday) => weekday switch
     {

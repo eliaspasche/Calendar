@@ -1,17 +1,16 @@
-﻿namespace Calendar;
+﻿namespace Calendar.Common;
 
 /// <summary>
-/// 
+/// Custom date object that contains a day and a month.
 /// </summary>
 public class CustomDate
 {
-    public int day { get; set; }
-    public Month month { get; set; }
+    public int Day { get; }
+    public Month Month { get; }
 
     public CustomDate(int day, Month month)
     {
-        this.day = day;
-        this.month = month;
+        Day = day;
+        Month = month;
     }
-    
 }

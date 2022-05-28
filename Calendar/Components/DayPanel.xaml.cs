@@ -1,46 +1,47 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace Calendar.Components;
 
 /// <summary>
-/// 
+/// Component to display a single day with an optional national holiday.
+/// An attribute can also be used to specify whether the DayPanel contains a day from the currently displayed month.
 /// </summary>
-public partial class DayPanel : UserControl
+public partial class DayPanel
 {
-    private bool _isCurrentMonth;
-    private string? _holiday;
-
     public DayPanel()
     {
         InitializeComponent();
         DataContext = this;
     }
 
+    /// <summary>
+    /// Used to display the date (integer value).
+    /// </summary>
     public object Day
     {
-        get => DayLabel.Content;
         set => DayLabel.Content = value;
     }
 
+    /// <summary>
+    /// Used to display a national holiday in the panel
+    /// </summary>
     public string Holiday
     {
-        get => _holiday ?? "";
         set
         {
-            _holiday = value;
             HolidayLabel.Content = value;
             HolidayBorder.Visibility = value.Equals("") ? Visibility.Hidden : Visibility.Visible;
         }
     }
 
+    /// <summary>
+    /// Defines the styling for the current month to highlight the days of the current month.
+    /// </summary>
     public bool IsCurrentMonth
     {
-        get => _isCurrentMonth;
         set
         {
-            _isCurrentMonth = value;
             if (value)
             {
                 PanelBorder.Background = new SolidColorBrush(Color.FromRgb(249, 249, 249));

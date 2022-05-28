@@ -1,4 +1,4 @@
-﻿<Window x:Class="Calendar.MainWindow"
+﻿<Window x:Class="Calendar.Components.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -13,12 +13,16 @@
         Loaded="MainWindow_OnLoaded"
         WindowStartupLocation="CenterScreen">
 
+    <!-- Styling for window to achieve round corners -->
     <Window.Clip>
         <RectangleGeometry Rect="0,0,1200,1000"
                            RadiusX="10"
                            RadiusY="10" />
     </Window.Clip>
+
     <Border CornerRadius="4">
+
+        <!-- Grid definition for the whole main window -->
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
@@ -34,11 +38,13 @@
                 <ColumnDefinition Width="25" />
             </Grid.ColumnDefinitions>
 
-            <!-- Row for Heading -->
+            <!-- Row for heading and to enable drag and drop -->
             <Grid Grid.Row="0" Grid.Column="0"
                   ColumnSpan="3"
                   Background="#0f324b"
                   MouseDown="MainGrid_EventHandler">
+
+                <!-- Heading -->
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/../Assets/logo.png" Width="32" Margin="20 0 0 0" />
                     <Label Foreground="White"
@@ -62,7 +68,7 @@
                 </Button>
             </Grid>
 
-            <!-- Row for Menu -->
+            <!-- Row definition for menu and actions -->
             <Grid Grid.Row="1" Grid.Column="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -70,7 +76,7 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-
+                <!-- Button to open date select modal -->
                 <Button
                     Height="40"
                     Width="120"
@@ -80,36 +86,36 @@
                     FontWeight="Medium">
                 </Button>
 
-
                 <StackPanel Grid.Column="1" Grid.ColumnSpan="2"
                             Orientation="Horizontal"
                             HorizontalAlignment="Right"
                             Margin="0 0 5 0">
-
+                    <!-- Button to reset the calendar sheet to today -->
                     <Button Height="40"
                             Width="140"
                             HorizontalContentAlignment="Center"
                             VerticalContentAlignment="Center"
                             Margin="5,0"
                             Click="Today_OnClick" Content="Back to Today">
-
                     </Button>
+                    <!-- Button to switch to the previous month -->
                     <Button Height="40"
                             Width="60"
                             HorizontalContentAlignment="Center"
                             VerticalContentAlignment="Center"
                             Margin="5,0"
                             Click="PrevMonth_OnClick"
-                            Name="PrevMonth_Button">
+                            Name="PrevMonthButton">
                         <Image Source="/../Assets/arrowBack.png" Height="24" />
                     </Button>
+                    <!-- Button so switch to the next month -->
                     <Button Height="40"
                             Width="60"
                             HorizontalContentAlignment="Center"
                             VerticalContentAlignment="Center"
                             Margin="5,0"
                             Click="NextMonth_OnClick"
-                            Name="NextMonth_Button">
+                            Name="NextMonthButton">
                         <Image Source="/../Assets/arrowForward.png" Height="24" />
                     </Button>
                     <Label Content="Month"
@@ -127,7 +133,7 @@
                 </StackPanel>
             </Grid>
 
-            <!-- Row for Weekdays -->
+            <!-- Row for the headings of the day panels -->
             <Grid Grid.Row="2" Grid.Column="1">
                 <Border CornerRadius="5" Background="#f9f9f9" Margin="2">
                     <Grid>
@@ -193,7 +199,7 @@
                 </Border>
             </Grid>
 
-            <!-- Calendar Grid -->
+            <!-- Grid definition for all day panels -->
             <Grid Grid.Row="3" Grid.Column="1" Name="DatePanels">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
@@ -213,7 +219,7 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <!-- Row 1 -->
+                <!-- Row 1 for DayPanels -->
                 <c:DayPanel Grid.Column="0" Grid.Row="0" />
                 <c:DayPanel Grid.Column="1" Grid.Row="0" />
                 <c:DayPanel Grid.Column="2" Grid.Row="0" />
@@ -222,8 +228,7 @@
                 <c:DayPanel Grid.Column="5" Grid.Row="0" />
                 <c:DayPanel Grid.Column="6" Grid.Row="0" />
 
-
-                <!-- Row 2 -->
+                <!-- Row 2 for DayPanels -->
                 <c:DayPanel Grid.Column="0" Grid.Row="1" />
                 <c:DayPanel Grid.Column="1" Grid.Row="1" />
                 <c:DayPanel Grid.Column="2" Grid.Row="1" />
@@ -232,8 +237,7 @@
                 <c:DayPanel Grid.Column="5" Grid.Row="1" />
                 <c:DayPanel Grid.Column="6" Grid.Row="1" />
 
-
-                <!-- Row 3 -->
+                <!-- Row 3 for DayPanels -->
                 <c:DayPanel Grid.Column="0" Grid.Row="2" />
                 <c:DayPanel Grid.Column="1" Grid.Row="2" />
                 <c:DayPanel Grid.Column="2" Grid.Row="2" />
@@ -242,8 +246,7 @@
                 <c:DayPanel Grid.Column="5" Grid.Row="2" />
                 <c:DayPanel Grid.Column="6" Grid.Row="2" />
 
-
-                <!-- Row 4 -->
+                <!-- Row 4 for DayPanels -->
                 <c:DayPanel Grid.Column="0" Grid.Row="3" />
                 <c:DayPanel Grid.Column="1" Grid.Row="3" />
                 <c:DayPanel Grid.Column="2" Grid.Row="3" />
@@ -252,8 +255,7 @@
                 <c:DayPanel Grid.Column="5" Grid.Row="3" />
                 <c:DayPanel Grid.Column="6" Grid.Row="3" />
 
-
-                <!-- Row 5 -->
+                <!-- Row 5 for DayPanels -->
                 <c:DayPanel Grid.Column="0" Grid.Row="4" />
                 <c:DayPanel Grid.Column="1" Grid.Row="4" />
                 <c:DayPanel Grid.Column="2" Grid.Row="4" />
@@ -262,7 +264,7 @@
                 <c:DayPanel Grid.Column="5" Grid.Row="4" />
                 <c:DayPanel Grid.Column="6" Grid.Row="4" />
 
-                <!-- Row 5 -->
+                <!-- Row 6 for DayPanels -->
                 <c:DayPanel Grid.Column="0" Grid.Row="5" />
                 <c:DayPanel Grid.Column="1" Grid.Row="5" />
                 <c:DayPanel Grid.Column="2" Grid.Row="5" />
