@@ -20,6 +20,7 @@ public partial class DayPanel
     /// </summary>
     public object Day
     {
+        get => DayLabel.Content;
         set => DayLabel.Content = value;
     }
 

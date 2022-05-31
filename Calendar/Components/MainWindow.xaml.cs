@@ -52,7 +52,22 @@ namespace Calendar.Components
         {
             // Init calendar with current date
             SetCalendarToToday();
+            GetWindow(this).KeyDown += HandleKeyPress;
         }
+
+        private void HandleKeyPress(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Left)
+            {
+                SetPrevMonth();
+            }
+
+            if (e.Key == Key.Right)
+            {
+                SetNextMonth();
+            }
+        }
+
 
         /// <summary>
         /// Displays the data of the current month in the calendar sheet.
@@ -117,6 +132,32 @@ namespace Calendar.Components
 
             // set the prev/next month buttons
             SetMonthButtons(month, year);
+
+            // Check if the first possible month is selected
+            if (year == 1582 && month == Month.OCTOBER)
+            {
+                // Remove the invalid days
+                RemoveDatesBeforeGregorianCalendar();
+            }
+        }
+
+        /// <summary>
+        /// Clears all days before the 15th of the month in the current calendar sheet. This is used to remove all
+        /// days from the calendar that predate the introduction of the Gregorian calendar on Oct. 15, 1582.
+        /// </summary>
+        private void RemoveDatesBeforeGregorianCalendar()
+        {
+            foreach (DayPanel dayPanel in DatePanels.Children)
+            {
+                if (dayPanel.Day.Equals(15))
+                {
+                    break;
+                }
+
+                dayPanel.Day = "";
+                dayPanel.Holiday = "";
+                dayPanel.IsCurrentMonth = false;
+            }
         }
 
         /// <summary>
@@ -188,6 +229,14 @@ namespace Calendar.Components
         /// <param name="e"></param>
         private void NextMonth_OnClick(object sender, RoutedEventArgs e)
         {
+            SetNextMonth();
+        }
+
+        /// <summary>
+        /// Displays the next month in the calendar sheet.
+        /// </summary>
+        private void SetNextMonth()
+        {
             // determine the next month and year
             var nextMonth = CurrentMonth.Content.ToString()!.ToMonth().NextMonth();
             var nextYear = nextMonth == Month.JANUARY ? (int) CurrentYear.Content + 1 : (int) CurrentYear.Content;
@@ -201,6 +250,14 @@ namespace Calendar.Components
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void PrevMonth_OnClick(object sender, RoutedEventArgs e)
+        {
+            SetPrevMonth();
+        }
+
+        /// <summary>
+        /// Displays the previous month in the calendar sheet.
+        /// </summary>
+        private void SetPrevMonth()
         {
             // determine the previous month and year
             var prevMonth = CurrentMonth.Content.ToString()!.ToMonth().PrevMonth();

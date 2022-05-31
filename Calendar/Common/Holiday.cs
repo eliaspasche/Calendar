@@ -74,7 +74,7 @@ public static class HolidayExtensions
             Holiday.ASCENSION_DAY => NthMarchToDate(easter + 39, year),
             Holiday.WHIT_SUNDAY => NthMarchToDate(easter + 49, year),
             Holiday.WHIT_MONDAY => NthMarchToDate(easter + 50, year),
-            Holiday.DAY_OF_GERMANY => new CustomDate(3, Month.OCTOBER),
+            Holiday.DAY_OF_GERMANY when year >= 1990 => new CustomDate(3, Month.OCTOBER),
             Holiday.REFORMATION_DAY => new CustomDate(31, Month.OCTOBER),
             Holiday.CHRISTMAS => new CustomDate(25, Month.DECEMBER),
             Holiday.BOXING_DAY => new CustomDate(26, Month.DECEMBER),
@@ -92,7 +92,17 @@ public static class HolidayExtensions
     public static List<Holiday> HolidaysInThisMonth(this Month month, int year)
     {
         return Enum.GetValues(typeof(Holiday)).Cast<Holiday>()
-            .Where(holiday => holiday.ToDate(year).Month == month).ToList();
+            .Where(holiday =>
+            {
+                try
+                {
+                    return holiday.ToDate(year).Month == month;
+                }
+                catch
+                {
+                    return false;
+                }
+            }).ToList();
     }
 
     /// <summary>
