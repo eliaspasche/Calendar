@@ -11,16 +11,16 @@ School project to create a calendar application. The frontend is developed with 
 
 ## Project structure 
 ### Assets
-Assets like logos or icons can be found in `/Assets`. The assets are included as resources in the application.
+Assets like logos or icons can be found in `./Calendar/Assets`. The assets are included as resources in the application.
 
 ### Common
-In the `/Common` folder you can find all own data types and enums which are needed for the calendar.
+In the `./Calendar/Common` folder you can find all own data types and enums which are needed for the calendar.
 
 ### Components
-The `/Components` folder contains all components and windows from which the application is assembled. For each `xaml` file there is an additional `.cs` file which contains the logic of the respective component.
+The `./Calendar/Components` folder contains all components and windows from which the application is assembled. For each `xaml` file there is an additional `.cs` file which contains the logic of the respective component.
 
 ### Documentation
-The `/Documentation` folder includes three different Nassi-Shneiderman-Diagrams as `xml` file as well als picture.
+The `./Calendar/Documentation` folder includes three different Nassi-Shneiderman-Diagrams as `xml` file as well als picture.
 
 ### Services
-In the `/Services` folder you can find the the required services for this application. Currently there ist only the `CalendarService`. This Service contains helper methods for date calculations. 
+In the `./Calendar/Services` folder you can find the the required services for this application. Currently there ist only the `CalendarService`. This Service contains helper methods for date calculations. 
