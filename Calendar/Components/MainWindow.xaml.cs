@@ -92,7 +92,7 @@ namespace Calendar.Components
             CurrentMonth.Content = month.StringLiteral();
             CurrentYear.Content = year;
 
-            // determine the integer value of the weekday of the first day of the given month
+            // determine the integer value of the weekday of the first day of the given month (includes correction)
             var firstWeekday = CalendarService.GetWeekday(01, month, year).IntLiteral() - 2;
 
             // get the number of days of the current and last month

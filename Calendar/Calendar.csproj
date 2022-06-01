@@ -33,4 +33,8 @@
       </ApplicationDefinition>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Documentation" />
+    </ItemGroup>
+
 </Project>
